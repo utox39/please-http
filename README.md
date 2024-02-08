@@ -25,7 +25,7 @@ $ git clone https://github.com/utox39/please-http.git
 # cd to the repo
 $ cd path/to/dotty
 
-# Build dotty
+# Build please
 $ go build please.go requests.go charts.go logs.go 
 
 # Then move it somewhere in your $PATH. Here is an example:
