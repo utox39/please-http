@@ -23,7 +23,7 @@ but with some more functionality.
 $ git clone https://github.com/utox39/please-http.git
 
 # cd to the repo
-$ cd path/to/dotty
+$ cd path/to/please-http
 
 # Build please
 $ go build please.go requests.go charts.go logs.go 
