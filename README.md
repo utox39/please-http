@@ -1,6 +1,6 @@
 # please
 
->This project is under active development
+>⚠️: This project is under active development
 
 - [Description](#description)
 - [Requirements](#requirements)
@@ -10,7 +10,7 @@
 
 ## Description
 
-An http client written in Go.
+A http client written in Go.
 
 This project is inspired by [httpie-go](https://github.com/nojima/httpie-go) and [httpie](https://github.com/httpie/cli)
 but with some more functionality.
