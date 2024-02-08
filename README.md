@@ -26,7 +26,7 @@ $ git clone https://github.com/utox39/please-http.git
 $ cd path/to/please-http
 
 # Build please
-$ go build please.go requests.go charts.go logs.go 
+$ go build -v ./... 
 
 # Then move it somewhere in your $PATH. Here is an example:
 $ mv please ~/bin
