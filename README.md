@@ -20,7 +20,7 @@ but with some more functionality.
 
 ```bash
 # Clone the repo
-$ git clone ...
+$ git clone https://github.com/utox39/please-http.git
 
 # cd to the repo
 $ cd path/to/dotty
