@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Create a report to help me improve newproject-cli
+about: Create a report to help me improve please-http
 title: "[BUG]"
 labels: ''
 assignees: ''
