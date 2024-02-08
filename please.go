@@ -171,6 +171,8 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 }
 
 func main() {
+	const fewArgsError = "please: error: too few args."
+
 	var createLog bool
 	var genChart bool
 	var repetitions int
@@ -218,7 +220,7 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println("please: error: too few args.")
+						fmt.Println(fewArgsError)
 						os.Exit(1)
 					}
 
@@ -238,7 +240,7 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println("please: error: too few args.")
+						fmt.Println(fewArgsError)
 						os.Exit(1)
 					}
 
@@ -258,7 +260,7 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println("please: error: too few args.")
+						fmt.Println(fewArgsError)
 						os.Exit(1)
 					}
 
