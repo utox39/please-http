@@ -13,7 +13,7 @@
 A http client written in Go.
 
 This project is inspired by [httpie-go](https://github.com/nojima/httpie-go) and [httpie](https://github.com/httpie/cli)
-but with some more functionality.
+but has a few more features.
 
 ## Requirements
 - [Go](https://go.dev/)
