@@ -14,7 +14,6 @@ const (
 	ContentType = "application/json"
 )
 
-// GetRequest TODO: add err as other return type and handle the error in the calling function
 func GetRequest(requestUrl string) (Results, error) {
 	var results Results
 
