@@ -11,30 +11,29 @@ import (
 )
 
 const (
-	ContentType  = "application/json"
-	GenericError = "please: error: %v\n"
-	JsonError    = "please: json error: %v\n"
-	RequestError = "please: %v error: %v\n"
+	ContentType = "application/json"
 )
 
-func GetRequest(requestUrl string) Results {
+// GetRequest TODO: add err as other return type and handle the error in the calling function
+func GetRequest(requestUrl string) (Results, error) {
 	var results Results
 
 	results.StartTime = time.Now()
 	resp, err := http.Get(requestUrl)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
+
 	if err != nil {
-		log.Fatalf(RequestError, GET, err)
+		return Results{}, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -44,10 +43,10 @@ func GetRequest(requestUrl string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
 
-func PostRequest(requestUrl string, keysValues []string) Results {
+func PostRequest(requestUrl string, keysValues []string) (Results, error) {
 	var results Results
 	jsonMap := make(map[string]string)
 
@@ -62,7 +61,7 @@ func PostRequest(requestUrl string, keysValues []string) Results {
 
 	jsonBody, err := json.Marshal(jsonMap)
 	if err != nil {
-		log.Printf(JsonError, err)
+		return Results{}, err
 	}
 	payload := bytes.NewBuffer(jsonBody)
 
@@ -70,17 +69,17 @@ func PostRequest(requestUrl string, keysValues []string) Results {
 	resp, err := http.Post(requestUrl, ContentType, payload)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, POST, err)
+		return Results{}, err
 	}
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -90,10 +89,10 @@ func PostRequest(requestUrl string, keysValues []string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
 
-func PutRequest(requestUrl string, keysValues []string) Results {
+func PutRequest(requestUrl string, keysValues []string) (Results, error) {
 	var results Results
 	jsonMap := make(map[string]string)
 
@@ -107,7 +106,7 @@ func PutRequest(requestUrl string, keysValues []string) Results {
 
 	jsonBody, err := json.Marshal(jsonMap)
 	if err != nil {
-		log.Printf(JsonError, err)
+		return Results{}, err
 	}
 	payload := bytes.NewBuffer(jsonBody)
 
@@ -115,7 +114,7 @@ func PutRequest(requestUrl string, keysValues []string) Results {
 	req, err := http.NewRequest(http.MethodPut, requestUrl, payload)
 	req.Header.Set("Content-Type", ContentType)
 	if err != nil {
-		log.Fatalf(RequestError, PUT, err)
+		return Results{}, err
 	}
 
 	// Instantiate the http Client
@@ -126,25 +125,25 @@ func PutRequest(requestUrl string, keysValues []string) Results {
 	resp, err := client.Do(req)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, PUT, err)
+		return Results{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
 	// Read response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -154,10 +153,10 @@ func PutRequest(requestUrl string, keysValues []string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
 
-func PatchRequest(requestUrl string, keysValues []string) Results {
+func PatchRequest(requestUrl string, keysValues []string) (Results, error) {
 	var results Results
 	jsonMap := make(map[string]string)
 
@@ -171,7 +170,7 @@ func PatchRequest(requestUrl string, keysValues []string) Results {
 
 	jsonBody, err := json.Marshal(jsonMap)
 	if err != nil {
-		log.Printf(JsonError, err)
+		return Results{}, err
 	}
 
 	payload := bytes.NewBuffer(jsonBody)
@@ -180,7 +179,7 @@ func PatchRequest(requestUrl string, keysValues []string) Results {
 	req, err := http.NewRequest(http.MethodPatch, requestUrl, payload)
 	req.Header.Set("Content-Type", ContentType)
 	if err != nil {
-		log.Fatalf(RequestError, PATCH, err)
+		return Results{}, err
 	}
 
 	// Instantiate the http Client
@@ -191,25 +190,25 @@ func PatchRequest(requestUrl string, keysValues []string) Results {
 	resp, err := client.Do(req)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, PATCH, err)
+		return Results{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
 	// Read response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -219,16 +218,16 @@ func PatchRequest(requestUrl string, keysValues []string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
 
-func DeleteRequest(requestUrl string) Results {
+func DeleteRequest(requestUrl string) (Results, error) {
 	var results Results
 
 	// Define the DELETE request and set any additional headers
 	req, err := http.NewRequest(http.MethodDelete, requestUrl, nil)
 	if err != nil {
-		log.Fatalf(RequestError, DELETE, err)
+		return Results{}, err
 	}
 
 	// Instantiate the http Client
@@ -239,25 +238,25 @@ func DeleteRequest(requestUrl string) Results {
 	resp, err := client.Do(req)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, DELETE, err)
+		return Results{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
 	// Read response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -267,16 +266,16 @@ func DeleteRequest(requestUrl string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, err
 }
 
-func HeadRequest(requestUrl string) Results {
+func HeadRequest(requestUrl string) (Results, error) {
 	var results Results
 
 	// Define the HEAD request and set any additional headers
 	req, err := http.NewRequest(http.MethodHead, requestUrl, nil)
 	if err != nil {
-		log.Fatalf(RequestError, HEAD, err)
+		return Results{}, err
 	}
 	// Instantiate the http Client
 	client := &http.Client{}
@@ -286,25 +285,25 @@ func HeadRequest(requestUrl string) Results {
 	resp, err := client.Do(req)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, HEAD, err)
+		return Results{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
 	// Read response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -314,16 +313,16 @@ func HeadRequest(requestUrl string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
 
-func OptionsRequest(requestUrl string) Results {
+func OptionsRequest(requestUrl string) (Results, error) {
 	var results Results
 
 	// Define the OPTIONS request and set any additional headers
 	req, err := http.NewRequest(http.MethodOptions, requestUrl, nil)
 	if err != nil {
-		log.Fatalf(RequestError, OPTIONS, err)
+		return Results{}, err
 	}
 	// Instantiate the http Client
 	client := &http.Client{}
@@ -333,25 +332,25 @@ func OptionsRequest(requestUrl string) Results {
 	resp, err := client.Do(req)
 	results.RespTime = time.Since(results.StartTime).Milliseconds()
 	if err != nil {
-		log.Fatalf(RequestError, OPTIONS, err)
+		return Results{}, err
 	}
 
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
 	// Read response
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf(GenericError, err)
+		return Results{}, err
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Fatalf(GenericError, err)
+			log.Fatalln(GenericError, err)
 		}
 	}(resp.Body)
 
@@ -361,5 +360,5 @@ func OptionsRequest(requestUrl string) Results {
 	results.Headers = resp.Header
 	results.Protocol = resp.Proto
 
-	return results
+	return results, nil
 }
