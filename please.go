@@ -29,6 +29,8 @@ const (
 	PATCH   string = "PATCH"
 	HEAD    string = "HEAD"
 	OPTIONS string = "OPTIONS"
+
+	GenericError = "please: error: "
 )
 
 func PrintResults(results Results) {
@@ -64,14 +66,18 @@ func PrintResults(results Results) {
 
 func Request(requestType string, requestUrl string, createLog bool, genChart bool, repetitions int, keysValues []string) {
 	var respTimes []int64
-	var results Results
 
 	logFileSuccessfully := "- Log file generated successfully."
 
 	switch requestType {
 	case GET:
 		for i := 1; i <= repetitions; i++ {
-			results = GetRequest(requestUrl)
+			results, err := GetRequest(requestUrl)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -84,7 +90,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case POST:
 		for i := 1; i <= repetitions; i++ {
-			results = PostRequest(requestUrl, keysValues)
+			results, err := PostRequest(requestUrl, keysValues)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -97,7 +108,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case PUT:
 		for i := 1; i <= repetitions; i++ {
-			results = PutRequest(requestUrl, keysValues)
+			results, err := PutRequest(requestUrl, keysValues)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -110,7 +126,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case PATCH:
 		for i := 1; i <= repetitions; i++ {
-			results = PatchRequest(requestUrl, keysValues)
+			results, err := PatchRequest(requestUrl, keysValues)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -123,7 +144,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case DELETE:
 		for i := 1; i <= repetitions; i++ {
-			results = DeleteRequest(requestUrl)
+			results, err := DeleteRequest(requestUrl)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -136,7 +162,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case HEAD:
 		for i := 1; i <= repetitions; i++ {
-			results = HeadRequest(requestUrl)
+			results, err := HeadRequest(requestUrl)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
@@ -149,7 +180,12 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		}
 	case OPTIONS:
 		for i := 1; i <= repetitions; i++ {
-			results = OptionsRequest(requestUrl)
+			results, err := OptionsRequest(requestUrl)
+			if err != nil {
+				fmt.Println(GenericError, err)
+				os.Exit(1)
+			}
+
 			respTimes = append(respTimes, results.RespTime)
 			PrintResults(results)
 
