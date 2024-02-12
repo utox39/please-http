@@ -74,8 +74,11 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := GetRequest(requestUrl)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				// TODO: quando l'arg è nullo o la sintassi è scorretta fare l'handle qui
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -92,8 +95,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := PostRequest(requestUrl, keysValues)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -110,8 +115,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := PutRequest(requestUrl, keysValues)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -128,8 +135,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := PatchRequest(requestUrl, keysValues)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -146,8 +155,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := DeleteRequest(requestUrl)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -164,8 +175,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := HeadRequest(requestUrl)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)
@@ -182,8 +195,10 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := OptionsRequest(requestUrl)
 			if err != nil {
-				fmt.Println(GenericError, err)
-				os.Exit(1)
+				var fatalErr PleaseError
+				fatalErr.Err = err
+				fatalErr.ExitCode = 1
+				FatalError(fatalErr)
 			}
 
 			respTimes = append(respTimes, results.RespTime)

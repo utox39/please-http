@@ -55,10 +55,7 @@ func PostRequest(requestUrl string, keysValues []string) (Results, error) {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
 		} else {
-			var fatalErr PleaseError
-			fatalErr.Err = invalidSyntaxErrMsg
-			fatalErr.ExitCode = 1
-			FatalError(fatalErr)
+			return Results{}, invalidSyntaxErrMsg
 		}
 	}
 
@@ -105,10 +102,7 @@ func PutRequest(requestUrl string, keysValues []string) (Results, error) {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
 		} else {
-			var fatalErr PleaseError
-			fatalErr.Err = invalidSyntaxErrMsg
-			fatalErr.ExitCode = 1
-			FatalError(fatalErr)
+			return Results{}, invalidSyntaxErrMsg
 		}
 	}
 
@@ -174,10 +168,7 @@ func PatchRequest(requestUrl string, keysValues []string) (Results, error) {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
 		} else {
-			var fatalErr PleaseError
-			fatalErr.Err = invalidSyntaxErrMsg
-			fatalErr.ExitCode = 1
-			FatalError(fatalErr)
+			return Results{}, invalidSyntaxErrMsg
 		}
 	}
 
