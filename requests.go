@@ -51,11 +51,13 @@ func PostRequest(requestUrl string, keysValues []string) (Results, error) {
 
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" && strings.Contains(value, "=") {
-			splitValue = strings.Split(value, "=")
-			jsonMap[splitValue[0]] = splitValue[1]
-		} else {
-			return Results{}, invalidSyntaxErrMsg
+		if value != "" {
+			if strings.Contains(value, "=") {
+				splitValue = strings.Split(value, "=")
+				jsonMap[splitValue[0]] = splitValue[1]
+			} else {
+				return Results{}, invalidSyntaxErrMsg
+			}
 		}
 	}
 
@@ -98,11 +100,13 @@ func PutRequest(requestUrl string, keysValues []string) (Results, error) {
 
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" && strings.Contains(value, "=") {
-			splitValue = strings.Split(value, "=")
-			jsonMap[splitValue[0]] = splitValue[1]
-		} else {
-			return Results{}, invalidSyntaxErrMsg
+		if value != "" {
+			if strings.Contains(value, "=") {
+				splitValue = strings.Split(value, "=")
+				jsonMap[splitValue[0]] = splitValue[1]
+			} else {
+				return Results{}, invalidSyntaxErrMsg
+			}
 		}
 	}
 
@@ -164,11 +168,13 @@ func PatchRequest(requestUrl string, keysValues []string) (Results, error) {
 
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" && strings.Contains(value, "=") {
-			splitValue = strings.Split(value, "=")
-			jsonMap[splitValue[0]] = splitValue[1]
-		} else {
-			return Results{}, invalidSyntaxErrMsg
+		if value != "" {
+			if strings.Contains(value, "=") {
+				splitValue = strings.Split(value, "=")
+				jsonMap[splitValue[0]] = splitValue[1]
+			} else {
+				return Results{}, invalidSyntaxErrMsg
+			}
 		}
 	}
 
