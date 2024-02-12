@@ -74,7 +74,6 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		for i := 1; i <= repetitions; i++ {
 			results, err := GetRequest(requestUrl)
 			if err != nil {
-				// TODO: quando l'arg è nullo o la sintassi è scorretta fare l'handle qui
 				var fatalErr PleaseError
 				fatalErr.Err = err
 				fatalErr.ExitCode = 1
@@ -222,8 +221,6 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 }
 
 func main() {
-	const fewArgsError = "please: error: too few args."
-
 	var createLog bool
 	var genChart bool
 	var repetitions int
