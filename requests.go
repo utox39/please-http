@@ -52,9 +52,14 @@ func PostRequest(requestUrl string, keysValues []string) (Results, error) {
 	// TODO: Add syntax check
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" {
+		if value != "" && strings.Contains(value, "=") {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
+		} else {
+			var fatalErr PleaseError
+			fatalErr.Err = invalidSyntaxErrMsg
+			fatalErr.ExitCode = 1
+			FatalError(fatalErr)
 		}
 	}
 
@@ -97,9 +102,14 @@ func PutRequest(requestUrl string, keysValues []string) (Results, error) {
 
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" {
+		if value != "" && strings.Contains(value, "=") {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
+		} else {
+			var fatalErr PleaseError
+			fatalErr.Err = invalidSyntaxErrMsg
+			fatalErr.ExitCode = 1
+			FatalError(fatalErr)
 		}
 	}
 
@@ -161,9 +171,14 @@ func PatchRequest(requestUrl string, keysValues []string) (Results, error) {
 
 	var splitValue []string
 	for _, value := range keysValues {
-		if value != "" {
+		if value != "" && strings.Contains(value, "=") {
 			splitValue = strings.Split(value, "=")
 			jsonMap[splitValue[0]] = splitValue[1]
+		} else {
+			var fatalErr PleaseError
+			fatalErr.Err = invalidSyntaxErrMsg
+			fatalErr.ExitCode = 1
+			FatalError(fatalErr)
 		}
 	}
 

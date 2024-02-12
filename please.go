@@ -256,8 +256,10 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println(fewArgsError)
-						os.Exit(1)
+						var fatalErr PleaseError
+						fatalErr.Err = fewArgsErrMsg
+						fatalErr.ExitCode = 1
+						FatalError(fatalErr)
 					}
 
 					var keysValues []string
@@ -276,8 +278,10 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println(fewArgsError)
-						os.Exit(1)
+						var fatalErr PleaseError
+						fatalErr.Err = fewArgsErrMsg
+						fatalErr.ExitCode = 1
+						FatalError(fatalErr)
 					}
 
 					var keysValues []string
@@ -296,8 +300,10 @@ func main() {
 					requestUrl := cCtx.Args().Get(0)
 
 					if cCtx.Args().Len() < 2 {
-						fmt.Println(fewArgsError)
-						os.Exit(1)
+						var fatalErr PleaseError
+						fatalErr.Err = fewArgsErrMsg
+						fatalErr.ExitCode = 1
+						FatalError(fatalErr)
 					}
 
 					var keysValues []string
