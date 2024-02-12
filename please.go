@@ -66,148 +66,43 @@ func PrintResults(results Results) {
 
 func Request(requestType string, requestUrl string, createLog bool, genChart bool, repetitions int, keysValues []string) {
 	var respTimes []int64
+	var results Results
+	var err error
 
 	logFileSuccessfully := "- Log file generated successfully."
 
-	switch requestType {
-	case GET:
-		for i := 1; i <= repetitions; i++ {
-			results, err := GetRequest(requestUrl)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
-
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
+	for i := 1; i <= repetitions; i++ {
+		switch requestType {
+		case GET:
+			results, err = GetRequest(requestUrl)
+		case POST:
+			results, err = PostRequest(requestUrl, keysValues)
+		case PUT:
+			results, err = PutRequest(requestUrl, keysValues)
+		case PATCH:
+			results, err = PatchRequest(requestUrl, keysValues)
+		case DELETE:
+			results, err = DeleteRequest(requestUrl)
+		case HEAD:
+			results, err = HeadRequest(requestUrl)
+		case OPTIONS:
+			results, err = OptionsRequest(requestUrl)
 		}
-	case POST:
-		for i := 1; i <= repetitions; i++ {
-			results, err := PostRequest(requestUrl, keysValues)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
 
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
+		if err != nil {
+			var fatalErr PleaseError
+			fatalErr.Err = err
+			fatalErr.ExitCode = 1
+			FatalError(fatalErr)
 		}
-	case PUT:
-		for i := 1; i <= repetitions; i++ {
-			results, err := PutRequest(requestUrl, keysValues)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
 
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
+		respTimes = append(respTimes, results.RespTime)
+		PrintResults(results)
 
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
-		}
-	case PATCH:
-		for i := 1; i <= repetitions; i++ {
-			results, err := PatchRequest(requestUrl, keysValues)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
-
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
-		}
-	case DELETE:
-		for i := 1; i <= repetitions; i++ {
-			results, err := DeleteRequest(requestUrl)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
-
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
-		}
-	case HEAD:
-		for i := 1; i <= repetitions; i++ {
-			results, err := HeadRequest(requestUrl)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
-
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
-			}
-		}
-	case OPTIONS:
-		for i := 1; i <= repetitions; i++ {
-			results, err := OptionsRequest(requestUrl)
-			if err != nil {
-				var fatalErr PleaseError
-				fatalErr.Err = err
-				fatalErr.ExitCode = 1
-				FatalError(fatalErr)
-			}
-
-			respTimes = append(respTimes, results.RespTime)
-			PrintResults(results)
-
-			if createLog {
-				byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
-				if byteQuantity > 0 {
-					fmt.Println(logFileSuccessfully)
-				}
+		if createLog {
+			byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
+			if byteQuantity > 0 {
+				fmt.Println(logFileSuccessfully)
 			}
 		}
 	}
