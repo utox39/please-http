@@ -49,7 +49,6 @@ func PostRequest(requestUrl string, keysValues []string) (Results, error) {
 	var results Results
 	jsonMap := make(map[string]string)
 
-	// TODO: Add syntax check
 	var splitValue []string
 	for _, value := range keysValues {
 		if value != "" && strings.Contains(value, "=") {
