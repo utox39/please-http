@@ -251,7 +251,7 @@ func main() {
 			},
 		},
 		Action:  nil,
-		Version: "0.2",
+		Version: "0.3",
 	}
 
 	if err := app.Run(os.Args); err != nil {
