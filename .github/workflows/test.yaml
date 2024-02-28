@@ -6,12 +6,8 @@ name: Test
 on:
   push:
     branches: [ "main", "dev" ]
-    paths:
-      - '*.go'
   pull_request:
     branches: [ "main", "dev" ]
-    paths:
-      - '*.go'
 
 jobs:
 
@@ -24,9 +20,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: '1.21.6'
-
-      - name: Create coverage file
-        run: touch coverage.out
 
       - name: Test
         run: |
