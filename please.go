@@ -102,14 +102,14 @@ func Request(requestType string, requestUrl string, createLog bool, genChart boo
 		if createLog {
 			byteQuantity := GenLog(requestUrl, requestType, results, repetitions, i)
 			if byteQuantity > 0 {
-				fmt.Println(logFileSuccessfully)
+				pterm.Println(logFileSuccessfully + pterm.Green(results.Status))
 			}
 		}
 	}
 
 	if genChart && repetitions >= 2 {
 		GenCharts(repetitions, respTimes)
-		fmt.Println("- Chart generated successfully.")
+		pterm.Println("- Chart generated successfully." + pterm.Green(results.Status))
 	} else if genChart && repetitions < 2 {
 		fmt.Println("\nplease: chart generation error: there must be at least 2 repetitions.")
 	}
