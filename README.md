@@ -2,6 +2,12 @@
 
 >⚠️: This project is under active development
 
+[<img alt="GitHub go.mod Go version" src="https://img.shields.io/github/go-mod/go-version/utox39/please-http">](https://github.com/utox39/please-http/blob/main/go.mod)
+[<img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/utox39/please-http/.github%2Fworkflows%2Ftest.yaml">](https://github.com/utox39/please-http/actions/workflows/test.yaml)
+[![codecov](https://codecov.io/gh/utox39/please-http/graph/badge.svg?token=HFQC5TUNHO)](https://codecov.io/gh/utox39/please-http)
+---
+
+
 - [Description](#description)
 - [Requirements](#requirements)
 - [Installation](#installation)
