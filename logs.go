@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	
+
 	"github.com/tidwall/sjson"
 )
 
@@ -22,7 +22,7 @@ func GenLog(requestUrl string, requestType string, results Results, repetitions 
   "status-code": "",
 `
 	value, _ := sjson.Set(jsonTemplate, "url", requestUrl)
-	value, _ = sjson.Set(value, "start-time", results.StartTime)
+	value, _ = sjson.Set(value, "start-time", results.StartTime.Format("2006-01-02 15:04:05.999999999 -0700 MST"))
 	value, _ = sjson.Set(value, "time", strconv.FormatInt(results.RespTime, 10)+" ms")
 	value, _ = sjson.Set(value, "request-type", requestType)
 	value, _ = sjson.Set(value, "status-code", results.Status)
